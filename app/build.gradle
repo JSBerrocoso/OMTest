@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: "$rootDir/buildsystem/ktlint.gradle"
 
 android {
     compileSdkVersion 30
@@ -8,30 +9,79 @@ android {
 
     defaultConfig {
         applicationId "com.jsbs87.android.omtest.app"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
-        versionCode 1
+        versionCode computeVersionCode()
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+
+        debug{
+            applicationIdSuffix ".debug"
+            signingConfig signingConfigs.debug
+            resValue "string", "app_label", "OMTest[D]"
+
+        }
+
+        prerelease{
+            debuggable true
+            minifyEnabled false
+            applicationIdSuffix ".prerelease"
+            signingConfig signingConfigs.debug
+            resValue "string", "app_label", "OMTest[P]"
+        }
+
         release {
+            resValue "string", "app_label", "OMTest"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx_version"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.app_compat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintlayout_version"
+    implementation "com.google.android.material:material:1.3.0-alpha03"
 
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // DI
+    implementation "org.koin:koin-android:$rootProject.ext.koin_version"
+
+
+}
+
+def computeVersionCode() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-list', '--count', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim().toInteger()
 }
