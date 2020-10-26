@@ -3,6 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply from: "$rootDir/buildsystem/ktlint.gradle"
 
+def BASE_URL = "BASE_URL"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -19,14 +21,14 @@ android {
 
     buildTypes {
 
-        debug{
+        debug {
             applicationIdSuffix ".debug"
             signingConfig signingConfigs.debug
             resValue "string", "app_label", "OMTest[D]"
 
         }
 
-        prerelease{
+        prerelease {
             debuggable true
             minifyEnabled false
             applicationIdSuffix ".prerelease"
@@ -51,6 +53,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    applicationVariants.all { variant ->
+        setVariantBuildConfigField(variant, baseUrl, BASE_URL, STRING)
+    }
 }
 
 dependencies {
@@ -62,9 +68,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx_version"
-    implementation "androidx.appcompat:appcompat:$rootProject.ext.app_compat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintlayout_version"
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.appcompat:appcompat:$app_compat_version"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
     implementation "com.google.android.material:material:1.3.0-alpha03"
 
     testImplementation 'junit:junit:4.13'
@@ -72,8 +78,13 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // DI
-    implementation "org.koin:koin-android:$rootProject.ext.koin_version"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
 
+    // API REST
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
 }
 
