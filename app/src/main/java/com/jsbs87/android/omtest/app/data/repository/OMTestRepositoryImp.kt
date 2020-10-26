@@ -7,7 +7,7 @@ import com.jsbs87.android.omtest.app.data.utils.NetworkHandler
 import com.jsbs87.android.omtest.app.domain.OMTestRepository
 import com.jsbs87.android.omtest.app.domain.exception.Failure
 import com.jsbs87.android.omtest.app.domain.functional.Either
-import com.jsbs87.android.omtest.app.domain.model.Film
+import com.jsbs87.android.omtest.app.domain.model.Movie
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -17,12 +17,12 @@ class OMTestRepositoryImp(
     private val apiService: OMTestApiService,
     private val networkHandler: NetworkHandler
 ) : OMTestRepository {
-    override suspend fun getFilms(): Either<Failure, List<Film>> {
+    override suspend fun getFilms(): Either<Failure, List<Movie>> {
         return when (networkHandler.isInternetAvailable()) {
             true ->
                 request(
                     apiService.getFilms(),
-                    { it.map { filmEntity -> filmEntity.toFilm() } }, emptyList()
+                    { it.map { filmEntity -> filmEntity.toMovie() } }, emptyList()
                 )
             false -> Either.Left(Failure.NetworkConnection)
         }

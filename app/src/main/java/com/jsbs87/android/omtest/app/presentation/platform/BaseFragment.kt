@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.jsbs87.android.omtest.app.R
+import com.jsbs87.android.omtest.app.domain.exception.Failure
 import com.jsbs87.android.omtest.app.presentation.extension.hideLoading
 import com.jsbs87.android.omtest.app.presentation.extension.showLoading
 
@@ -23,6 +25,18 @@ abstract class BaseFragment: Fragment() {
             showLoading(loading.third)
         } else {
             hideLoading(loading?.second, loading?.third)
+        }
+    }
+
+    open fun showError(failure: Failure?) {
+        when (failure) {
+            is Failure.ServerError -> {
+                hideLoading(false, R.string.server_error)
+            }
+            is Failure.NetworkConnection -> {
+                hideLoading(false, R.string.network_error)
+            }
+            else-> (activity as? BaseActivity)?.showError(failure)
         }
     }
 }

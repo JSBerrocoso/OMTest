@@ -1,8 +1,8 @@
 package com.jsbs87.android.omtest.app.data.entity
 
-import com.jsbs87.android.omtest.app.domain.model.Film
+import com.jsbs87.android.omtest.app.domain.model.Movie
 
-data class FilmEntity(
+data class MovieEntity(
     val assetExternalId: String?,
     val attachments: List<AttachmentEntity>?,
     val contentProvider: String?,
@@ -15,15 +15,16 @@ data class FilmEntity(
     val id: Int?,
     val keywords: String?,
     val name: String?,
+    val shortName: String?,
     val seriesNumberOfEpisodes: String?,
     val status: Int?,
     val type: String?,
     val year: Int?
 ) {
-    fun toFilm(): Film {
-        return Film(
+    fun toMovie(): Movie {
+        return Movie(
             assetExternalId ?: "",
-            attachments ?: emptyList(),
+            attachments?.map { it.toAttachment()}?: emptyList(),
             contentProvider ?: "",
             contentProviderExternalId ?: "",
             definition ?: "",
@@ -37,7 +38,8 @@ data class FilmEntity(
             seriesNumberOfEpisodes ?: "",
             status ?: 0,
             type ?: "",
-            year ?: 0
+            year ?: 0,
+            shortName ?: "",
         )
     }
 }

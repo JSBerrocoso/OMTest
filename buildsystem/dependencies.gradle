@@ -15,5 +15,6 @@ project.ext {
     koin_version = '2.1.5'
 
     baseUrl = "https://smarttv.orangetv.orange.es/stv/api/"
+    baseImageUrl = "https://smarttv.orangetv.orange.es/stv/api/rtv/v1/images"
 
 }

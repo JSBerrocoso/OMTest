@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply from: "$rootDir/buildsystem/ktlint.gradle"
 
 def BASE_URL = "BASE_URL"
+def BASE_IMAGE_URL = "BASE_IMAGE_URL"
 
 android {
     compileSdkVersion 30
@@ -56,12 +57,13 @@ android {
 
     applicationVariants.all { variant ->
         setVariantBuildConfigField(variant, baseUrl, BASE_URL, STRING)
+        setVariantBuildConfigField(variant, baseImageUrl, BASE_IMAGE_URL, STRING)
     }
 }
 
 dependencies {
-    implementation 'androidx.navigation:navigation-fragment:2.3.1'
-    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
@@ -83,10 +85,13 @@ dependencies {
 
     // API REST
     implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
 
-}
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+
+    }
 
 def computeVersionCode() {
     def stdout = new ByteArrayOutputStream()

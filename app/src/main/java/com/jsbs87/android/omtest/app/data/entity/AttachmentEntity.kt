@@ -1,6 +1,8 @@
 package com.jsbs87.android.omtest.app.data.entity
 
 import com.google.gson.annotations.SerializedName
+import com.jsbs87.android.omtest.app.BuildConfig
+import com.jsbs87.android.omtest.app.domain.model.Attachment
 
 data class AttachmentEntity(
     @SerializedName("assetId")
@@ -13,4 +15,8 @@ data class AttachmentEntity(
     val responseElementType: String,
     @SerializedName("value")
     val value: String
-)
+) {
+    fun toAttachment(): Attachment {
+        return Attachment(assetId, assetName, name, responseElementType, BuildConfig.BASE_IMAGE_URL + value)
+    }
+}

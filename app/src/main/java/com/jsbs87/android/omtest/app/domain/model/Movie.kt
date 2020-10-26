@@ -1,11 +1,10 @@
 package com.jsbs87.android.omtest.app.domain.model
 
-import com.jsbs87.android.omtest.app.data.entity.AttachmentEntity
 import com.jsbs87.android.omtest.app.data.entity.GenreEntity
 
-class Film(
+class Movie(
     val assetExternalId: String,
-    val attachments: List<AttachmentEntity>,
+    val attachments: List<Attachment>,
     val contentProvider: String,
     val contentProviderExternalId: String,
     val definition: String,
@@ -19,6 +18,7 @@ class Film(
     val seriesNumberOfEpisodes: String,
     val status: Int,
     val type: String,
-    val year: Int
+    val year: Int,
+    val shortName: String
 ) {
 }

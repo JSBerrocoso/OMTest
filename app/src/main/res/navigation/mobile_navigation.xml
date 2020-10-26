@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_films"
-        android:name="com.jsbs87.android.omtest.app.presentation.ui.films.FilmsFragment"
+        android:name="com.jsbs87.android.omtest.app.presentation.ui.films.MoviesFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_films" />
+        tools:layout="@layout/fragment_movies" />
 
     <fragment
         android:id="@+id/navigation_favorite"

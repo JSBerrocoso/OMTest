@@ -7,29 +7,22 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jsbs87.android.omtest.app.R
+import com.jsbs87.android.omtest.app.presentation.dialog.LoadingDialog
 import com.jsbs87.android.omtest.app.presentation.platform.BaseActivity
+import com.jsbs87.android.omtest.app.presentation.util.LoadingHandler
 
 class HomeActivity : BaseActivity() {
 
+
+    override fun layoutId(): Int = R.layout.activity_home
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         val navController = findNavController(R.id.nav_host_fragment)
-
-        val appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.navigation_films, R.id.navigation_favorite))
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun showLoading(msg: Int?) {
-
-    }
-
-    override fun hideLoading(success: Boolean?, msg: Int?) {
-
     }
 
 }
