@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    android:padding="4dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/container_item_movie"
@@ -30,56 +29,51 @@
             android:gravity="center"
             android:orientation="vertical">
 
+
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image_movie_detail"
+                android:id="@+id/image_movie"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"
                 android:scaleType="center"
                 app:shapeAppearance="?attr/shapeAppearanceMediumComponent" />
 
-            <!--            <androidx.appcompat.widget.AppCompatTextView-->
-            <!--                android:id="@+id/title_movie_header"-->
-            <!--                style="@style/TextAppearance.AppCompat.Display1"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_margin="@dimen/activity_horizontal_margin"-->
-            <!--                android:textColor="@android:color/white"-->
-            <!--                tools:text="Movie" />-->
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
-
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/subtitle_movie_header"
-                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:id="@+id/title_movie"
+                        style="@style/TextAppearance.AppCompat.Body1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginTop="@dimen/activity_horizontal_margin"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                        android:layout_marginStart="@dimen/space_8"
+                        android:layout_marginEnd="@dimen/space_8"
+                        android:gravity="center|start"
+                        android:maxLines="2"
+                        android:minLines="2"
                         android:textColor="@android:color/white"
+                        tools:text="Movie" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/subtitle_movie"
+                        style="@style/TextAppearance.AppCompat.Caption"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_8"
+                        android:layout_marginEnd="@dimen/space_8"
+                        android:layout_marginBottom="@dimen/space_8"
+                        android:gravity="center|start"
+                        android:textColor="@android:color/white"
+                        android:textSize="10sp"
                         tools:text="Subtitle" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/year_movie_header"
-                        style="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/activity_horizontal_margin"
-                        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                        android:textColor="@android:color/white"
-                        tools:text="Year" />
-
                 </LinearLayout>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -87,32 +81,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom|end"
-                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_margin="@dimen/space_4"
                     app:backgroundTint="@color/colorAccent"
+                    app:fabSize="mini"
                     app:layout_anchor="@id/app_bar"
                     app:srcCompat="@drawable/ic_baseline_favorite_24" />
 
             </LinearLayout>
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/description_movie_header"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin"
-                android:textColor="@android:color/white"
-                tools:text="Description" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:text="@string/recommendations"
-        android:textColor="@android:color/white" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

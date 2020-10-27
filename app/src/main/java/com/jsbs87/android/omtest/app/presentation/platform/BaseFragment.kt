@@ -38,6 +38,15 @@ abstract class BaseFragment : Fragment() {
             is Failure.NetworkConnection -> {
                 hideLoading(false, R.string.network_error)
             }
+            is Failure.MovieAlreadySaved -> {
+                showSnackBar(getString(R.string.movie_already_saved))
+            }
+            is Failure.DeleteFavoriteMoviesError -> {
+                showSnackBar(getString(R.string.error_delete_favorite_movie))
+            }
+            is Failure.GetFavoriteMoviesError -> {
+                showSnackBar(getString(R.string.error_get_favo_movie))
+            }
             else -> (activity as? BaseActivity)?.showError(failure)
         }
     }
@@ -60,6 +69,12 @@ abstract class BaseFragment : Fragment() {
     fun hasCollapsingToolbarLayout(): Boolean {
         val toolbar =
             (activity as AppCompatActivity).findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
-        return toolbar!= null
+        return toolbar != null
+    }
+
+    fun showSnackBar(text: String) {
+        when (activity) {
+            is BaseActivity -> (activity as BaseActivity).showSnackBar(text)
+        }
     }
 }

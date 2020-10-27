@@ -1,11 +1,17 @@
+@file:Suppress("DEPRECATION")
+
 package com.jsbs87.android.omtest.app.data.di
 
+import android.preference.PreferenceManager
 import com.jsbs87.android.omtest.app.BuildConfig
 import com.jsbs87.android.omtest.app.data.api.OMTestApiService
+import com.jsbs87.android.omtest.app.data.local.LocalDataSource
+import com.jsbs87.android.omtest.app.data.local.LocalStorage
 import com.jsbs87.android.omtest.app.data.repository.OMTestRepositoryImp
 import com.jsbs87.android.omtest.app.domain.OMTestRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -24,9 +30,16 @@ val dataModule = module {
     single {
         OMTestRepositoryImp(
             apiService = get(),
-            networkHandler = get()
+            networkHandler = get(),
+            dataSource = get()
         )
     } bind OMTestRepository::class
+
+    single {
+        LocalStorage(
+            PreferenceManager.getDefaultSharedPreferences(androidApplication())
+        )
+    } bind LocalDataSource::class
 }
 
 fun getOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {

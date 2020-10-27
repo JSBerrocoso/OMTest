@@ -1,6 +1,7 @@
 package com.jsbs87.android.omtest.app.domain.model
 
 import android.os.Parcelable
+import com.google.gson.Gson
 import com.jsbs87.android.omtest.app.data.entity.GenreEntity
 import kotlinx.android.parcel.Parcelize
 
@@ -21,12 +22,16 @@ open class Movie(
     val status: Int,
     val type: String,
     val year: Int,
-    val shortName: String
-) : Parcelable, OMTestMovie{
+    val shortName: String,
+    var favorite: Boolean = false,
+) : Parcelable, OMTestMovie {
+    fun toJson(): String? {
+        return Gson().toJson(this)
+    }
 
     companion object {
         fun empty() = Movie(
-            "", emptyList(), "", "", "", "", 0, "",  0, "", "", "", 0, "", 0, ""
+            "", emptyList(), "", "", "", "", 0, "", 0, "", "", "", 0, "", 0, "", false
         )
     }
 }

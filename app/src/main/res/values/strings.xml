@@ -19,6 +19,10 @@
     <string name="recommendations">Recommendations</string>
     <string name="keywords">Keywords: %s</string>
     <string name="year">Year: %s</string>
+    <string name="movie_already_saved">Ups! Movie already saved</string>
+    <string name="error_delete_favorite_movie">Ups! A error ocurred on remove movie</string>
+    <string name="error_get_favo_movie">Not posible load favorites</string>
+    <string name="title_favorites_not_found">Favorites not found</string>
 
 
 </resources>

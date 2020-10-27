@@ -10,7 +10,7 @@ class MoviesViewModel(private val getMovies: GetMoviesUseCase) : BaseViewModel()
 
     var films: MutableLiveData<List<Movie>> = MutableLiveData()
 
-    fun loadFilms() {
+    fun loadMovies() {
         showLoading()
         getMovies(UseCase.None){
             hideLoading()

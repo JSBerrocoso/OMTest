@@ -32,16 +32,21 @@ class DetailMovieFragment : BaseFragment() {
         }
     }
 
-
     private val movieAdapter =
-        RecommendationsAdapter { recommendation, position ->
+        RecommendationsAdapter({ recommendation, position ->
             activity?.let {
                 DetailMovieActivity.openActivity(
                     it,
                     recommendation.externalContentId + "_PAGE_HD"
                 )
             }
-        }
+        }, {
+            if(it.favorite.not()){
+                viewModel.saveToFavorite(it)
+            }else{
+                viewModel.removeFromFavorite(it)
+            }
+        })
 
     override fun layoutId(): Int = R.layout.fragment_detail_movie
 
@@ -62,7 +67,7 @@ class DetailMovieFragment : BaseFragment() {
         movie?.name?.let {
             if (hasCollapsingToolbarLayout()) {
                 setTitleCollapsingToolbarLayout(it)
-            }else{
+            } else {
                 setTitleToolbar(it)
             }
         }

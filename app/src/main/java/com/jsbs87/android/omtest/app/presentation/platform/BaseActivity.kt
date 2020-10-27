@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.exception.Failure
 import com.jsbs87.android.omtest.app.presentation.dialog.LoadingDialog
 import com.jsbs87.android.omtest.app.presentation.util.LoadingHandler
+import kotlinx.android.synthetic.main.activity_detail_movie.*
 
 abstract class BaseActivity : AppCompatActivity(), LoadingHandler {
 
@@ -37,7 +39,10 @@ abstract class BaseActivity : AppCompatActivity(), LoadingHandler {
     }
 
     fun showGenericError() {
-        showAlertDialog( getString(R.string.title_generic_error), getString(R.string.message_generic_error))
+        showAlertDialog(
+            getString(R.string.title_generic_error),
+            getString(R.string.message_generic_error)
+        )
     }
 
     override fun showLoading() {
@@ -57,5 +62,9 @@ abstract class BaseActivity : AppCompatActivity(), LoadingHandler {
                 onBackPressed()
             }
         }
+    }
+
+    fun showSnackBar(text: String) {
+        Snackbar.make(toolbar, text, Snackbar.LENGTH_LONG).show()
     }
 }

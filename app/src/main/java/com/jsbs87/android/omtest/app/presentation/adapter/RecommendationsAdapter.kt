@@ -7,14 +7,17 @@ import androidx.annotation.UiThread
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.domain.model.OMTestMovie
 import com.jsbs87.android.omtest.app.domain.model.Recommentation
 import com.jsbs87.android.omtest.app.presentation.extension.loadUrl
+import kotlinx.android.synthetic.main.item_header_detail_movie.view.*
 import kotlinx.android.synthetic.main.item_recommendation.view.*
+import kotlinx.android.synthetic.main.item_recommendation.view.container_item_movie
 
-class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit) :
+class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit, val onClickAddFavorite: (Movie) -> Unit) :
     RecyclerView.Adapter<RecommendationsAdapter.DetailViewHolder>() {
 
     private val items = mutableListOf<Recommentation>()
@@ -42,7 +45,7 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit) :
         private val subtitle = view.findViewById<AppCompatTextView>(R.id.subtitle_movie_header)
         private val description = view.findViewById<AppCompatTextView>(R.id.description_movie_header)
         private val year = view.findViewById<AppCompatTextView>(R.id.year_movie_header)
-
+        private val fabAddFavorite = view.findViewById<FloatingActionButton>(R.id.fab_add_favorites)
 
         override fun bind(item: OMTestMovie) {
             if (item is Movie) {
@@ -55,6 +58,9 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit) :
                 if (photoUrl.isNotEmpty()) {
                     imageHeader.loadUrl(photoUrl)
                 }
+                if(item.favorite){
+                    fabAddFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                }else fabAddFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             }
 
         }
@@ -102,6 +108,9 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit) :
                 if (holder is HeaderVH) {
                     movie?.let { holder.bind(it) }
                 }
+                holder.itemView.fab_add_favorites.setOnClickListener {
+                    movie?.let { it1 -> onClickAddFavorite(it1) }
+                }
             }
             else -> {
                 holder.bind(items[position])
@@ -112,6 +121,11 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit) :
         }
     }
 
+//    @UiThread
+//    fun updateFavorite(saved: Boolean) {
+//        savedMovie = saved
+////        notifyDataSetChanged()
+//    }
 
     abstract class DetailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun bind(item: OMTestMovie)

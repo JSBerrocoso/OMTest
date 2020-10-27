@@ -11,6 +11,12 @@ sealed class Failure(var message: String? = null) {
 
     object NetworkConnection : Failure()
     object ServerError : Failure()
+    object SaveMovieError : Failure()
+    object GetFavoriteMoviesError : Failure()
+    object IsMovieFavoriteError : Failure()
+    object SaveFavoriteMoviesError : Failure()
+    object DeleteFavoriteMoviesError : Failure()
+    object MovieAlreadySaved : Failure()
 
     abstract class FeatureFailure(message: String? = null) : Failure(message) {
 

@@ -38,7 +38,7 @@ class MoviesFragment : BaseFragment() {
             layoutManager = GridLayoutManager(activity, 3)
             adapter = movieAdapter
         }
-        viewModel.loadFilms()
+        viewModel.loadMovies()
     }
 
     private fun handleFilms(movies: List<Movie>?) {
