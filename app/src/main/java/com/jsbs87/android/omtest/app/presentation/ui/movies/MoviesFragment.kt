@@ -1,16 +1,15 @@
-package com.jsbs87.android.omtest.app.presentation.ui.films
+package com.jsbs87.android.omtest.app.presentation.ui.movies
 
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.jsbs87.android.omtest.app.R
-import com.jsbs87.android.omtest.app.domain.exception.Failure
 import com.jsbs87.android.omtest.app.presentation.adapter.MoviesAdapter
 import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.presentation.extension.failure
 import com.jsbs87.android.omtest.app.presentation.extension.observe
 import com.jsbs87.android.omtest.app.presentation.platform.BaseFragment
-import com.jsbs87.android.omtest.app.presentation.platform.FailureHandler
+import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieActivity
 import kotlinx.android.synthetic.main.fragment_movies.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
@@ -21,7 +20,7 @@ class MoviesFragment : BaseFragment() {
 
     private val movieAdapter =
         MoviesAdapter { movie, position ->
-
+            activity?.let { DetailMovieActivity.openActivity(it, movie.externalId) }
         }
 
     override fun layoutId(): Int = R.layout.fragment_movies

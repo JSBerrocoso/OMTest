@@ -2,6 +2,7 @@ package com.jsbs87.android.omtest.app.presentation.platform
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.exception.Failure
@@ -45,5 +46,16 @@ abstract class BaseActivity : AppCompatActivity(), LoadingHandler {
 
     override fun hideLoading() {
         loadingDialog.hide()
+    }
+
+    fun setOnBackButtonToolbar(enable: Boolean, toolbar: Toolbar) {
+        supportActionBar?.setDefaultDisplayHomeAsUpEnabled(enable)
+        supportActionBar?.setDisplayHomeAsUpEnabled(enable)
+        supportActionBar?.setDisplayShowHomeEnabled(enable)
+        if (enable) {
+            toolbar.setNavigationOnClickListener {
+                onBackPressed()
+            }
+        }
     }
 }

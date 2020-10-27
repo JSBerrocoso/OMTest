@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.films.MoviesFragment"
+    tools:context=".presentation.ui.movies.MoviesFragment"
     android:layout_margin="@dimen/space_12">
 
     <androidx.recyclerview.widget.RecyclerView

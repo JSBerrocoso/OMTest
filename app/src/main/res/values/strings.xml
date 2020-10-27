@@ -15,4 +15,10 @@
     <string name="title_generic_error">Ups!</string>
     <string name="network_error">Network error</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="keywords">Keywords: %s</string>
+    <string name="year">Year: %s</string>
+
+
 </resources>

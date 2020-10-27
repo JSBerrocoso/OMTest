@@ -8,4 +8,7 @@
     <dimen name="space_14">14dp</dimen>
     <dimen name="space_12">12dp</dimen>
     <dimen name="space_8">8dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

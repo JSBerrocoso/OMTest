@@ -1,8 +1,11 @@
 package com.jsbs87.android.omtest.app.domain.model
 
+import android.os.Parcelable
 import com.jsbs87.android.omtest.app.data.entity.GenreEntity
+import kotlinx.android.parcel.Parcelize
 
-class Movie(
+@Parcelize
+open class Movie(
     val assetExternalId: String,
     val attachments: List<Attachment>,
     val contentProvider: String,
@@ -11,7 +14,6 @@ class Movie(
     val description: String,
     val duration: Int,
     val externalId: String,
-    val genreEntityList: List<GenreEntity>,
     val id: Int,
     val keywords: String,
     val name: String,
@@ -20,5 +22,11 @@ class Movie(
     val type: String,
     val year: Int,
     val shortName: String
-) {
+) : Parcelable, OMTestMovie{
+
+    companion object {
+        fun empty() = Movie(
+            "", emptyList(), "", "", "", "", 0, "",  0, "", "", "", 0, "", 0, ""
+        )
+    }
 }

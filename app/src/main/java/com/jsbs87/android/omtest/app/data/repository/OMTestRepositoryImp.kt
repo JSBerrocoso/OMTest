@@ -2,12 +2,14 @@ package com.jsbs87.android.omtest.app.data.repository
 
 import android.util.Log
 import com.jsbs87.android.omtest.app.data.api.OMTestApiService
+import com.jsbs87.android.omtest.app.data.entity.MovieEntity
 import com.jsbs87.android.omtest.app.data.entity.ResponseEntity
 import com.jsbs87.android.omtest.app.data.utils.NetworkHandler
 import com.jsbs87.android.omtest.app.domain.OMTestRepository
 import com.jsbs87.android.omtest.app.domain.exception.Failure
 import com.jsbs87.android.omtest.app.domain.functional.Either
 import com.jsbs87.android.omtest.app.domain.model.Movie
+import com.jsbs87.android.omtest.app.domain.model.Recommentation
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -17,13 +19,28 @@ class OMTestRepositoryImp(
     private val apiService: OMTestApiService,
     private val networkHandler: NetworkHandler
 ) : OMTestRepository {
-    override suspend fun getFilms(): Either<Failure, List<Movie>> {
+
+    override suspend fun getMovies(): Either<Failure, List<Movie>> {
         return when (networkHandler.isInternetAvailable()) {
             true ->
                 request(
-                    apiService.getFilms(),
+                    apiService.getUnifiedList(),
                     { it.map { filmEntity -> filmEntity.toMovie() } }, emptyList()
                 )
+            false -> Either.Left(Failure.NetworkConnection)
+        }
+    }
+
+    override suspend fun getDetailMovie(externalId: String): Either<Failure, Movie> {
+        return when (networkHandler.isInternetAvailable()) {
+            true -> request( apiService.getVideo(externalId), { it.toMovie()}, MovieEntity.empty())
+            false -> Either.Left(Failure.NetworkConnection)
+        }
+    }
+
+    override suspend fun getRecommendations(externalId: String): Either<Failure, List<Recommentation>> {
+        return when (networkHandler.isInternetAvailable()) {
+            true -> request(apiService.getVideoRecommendationList("external_content_id:$externalId"), { it.map { recommendationEntity -> recommendationEntity.toRecommendation() } }, emptyList())
             false -> Either.Left(Failure.NetworkConnection)
         }
     }

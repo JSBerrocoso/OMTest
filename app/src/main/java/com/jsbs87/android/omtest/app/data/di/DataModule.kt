@@ -3,12 +3,9 @@ package com.jsbs87.android.omtest.app.data.di
 import com.jsbs87.android.omtest.app.BuildConfig
 import com.jsbs87.android.omtest.app.data.api.OMTestApiService
 import com.jsbs87.android.omtest.app.data.repository.OMTestRepositoryImp
-import com.jsbs87.android.omtest.app.data.utils.NetworkHandler
 import com.jsbs87.android.omtest.app.domain.OMTestRepository
-import com.jsbs87.android.omtest.app.domain.interactors.GetFilmsUseCase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.presentation.extension.loadUrl
+import kotlinx.android.synthetic.main.item_movie.view.*
 
 class MoviesAdapter(val onClickItem: (Movie, Int) -> Unit) :
     RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
@@ -45,7 +46,7 @@ class MoviesAdapter(val onClickItem: (Movie, Int) -> Unit) :
 
     override fun onBindViewHolder(holder: MovieVH, position: Int) {
         holder.bind(items[position])
-        holder.itemView.setOnClickListener {
+        holder.itemView.container_item_movie.setOnClickListener {
             onClickItem(items[position], position)
         }
     }

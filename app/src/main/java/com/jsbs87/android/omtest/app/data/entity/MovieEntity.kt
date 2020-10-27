@@ -21,8 +21,7 @@ data class MovieEntity(
     val type: String?,
     val year: Int?
 ) {
-    fun toMovie(): Movie {
-        return Movie(
+    fun toMovie() = Movie(
             assetExternalId ?: "",
             attachments?.map { it.toAttachment()}?: emptyList(),
             contentProvider ?: "",
@@ -31,7 +30,6 @@ data class MovieEntity(
             description ?: "",
             duration ?: 0,
             externalId ?: "",
-            genreEntityList ?: emptyList(),
             id ?: 0,
             keywords ?: "",
             name ?: "",
@@ -40,6 +38,11 @@ data class MovieEntity(
             type ?: "",
             year ?: 0,
             shortName ?: "",
+        )
+
+    companion object {
+        fun empty() = MovieEntity(
+            "", emptyList(), "", "", "", "", 0, "", emptyList(), 0, "", "", "", "", 0, "",0
         )
     }
 }
