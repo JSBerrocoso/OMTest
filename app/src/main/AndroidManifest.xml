@@ -15,12 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
+
         <activity
             android:name=".presentation.ui.detail.DetailMovieActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".presentation.ui.HomeActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".presentation.ui.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
