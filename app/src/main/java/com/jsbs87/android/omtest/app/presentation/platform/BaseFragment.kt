@@ -35,10 +35,10 @@ abstract class BaseFragment : Fragment() {
     open fun showError(failure: Failure?) {
         when (failure) {
             is Failure.ServerError -> {
-                hideLoading(false, R.string.server_error)
+                showSnackBar(getString(R.string.server_error))
             }
             is Failure.NetworkConnection -> {
-                hideLoading(false, R.string.network_error)
+                showSnackBar( getString(R.string.network_error))
             }
             is Failure.MovieAlreadySaved -> {
                 showSnackBar(getString(R.string.movie_already_saved))
