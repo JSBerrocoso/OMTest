@@ -10,12 +10,17 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.jsbs87.android.omtest.app.R
+import com.jsbs87.android.omtest.app.domain.model.Movie
+import com.jsbs87.android.omtest.app.presentation.extension.replace
 import com.jsbs87.android.omtest.app.presentation.platform.BaseActivity
+import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieActivity
+import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieFragment
 import com.jsbs87.android.omtest.app.presentation.util.SearcheableView
+import com.jsbs87.android.omtest.app.presentation.util.TouchableMovieView
 import kotlinx.android.synthetic.main.activity_home.*
 
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : BaseActivity(), TouchableMovieView {
 
     override fun layoutId(): Int = R.layout.activity_home
 
@@ -24,10 +29,10 @@ class HomeActivity : BaseActivity() {
         setSupportActionBar(toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        val appBarConfiguration =
+        setupActionBarWithNavController(
+            navController,
             AppBarConfiguration(setOf(R.id.navigation_films, R.id.navigation_favorite))
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
+        )
         nav_view.setupWithNavController(navController)
     }
 
@@ -72,6 +77,17 @@ class HomeActivity : BaseActivity() {
             null
         } else {
             navHostFragment.childFragmentManager.fragments[0]
+        }
+    }
+
+    override fun onClickMovie(movie: Movie) {
+        if (container_detail_movie_land != null) {
+            replace(
+                R.id.container_detail_movie_land,
+                DetailMovieFragment.newInstance(movie.externalId)
+            )
+        } else {
+            DetailMovieActivity.openActivity(this, movie.externalId)
         }
     }
 

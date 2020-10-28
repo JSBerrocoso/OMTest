@@ -10,7 +10,7 @@ class DetailMovieViewModel(
     private val getFilms: GetDetailMovieUseCase,
     private val getRecommendations: GetRecommendationsUseCase,
     private val saveFavoriteMovie: SaveFavoriteMoviesUseCase,
-    private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase,
+    private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase
 ) : BaseViewModel() {
 
     var movie: MutableLiveData<Movie> = MutableLiveData()
@@ -20,18 +20,13 @@ class DetailMovieViewModel(
     var externalContentId: MutableLiveData<String> = MutableLiveData()
 
     fun loadDetail() {
-        showLoading()
         getFilms(GetDetailMovieUseCase.Params(externalId.value.toString())) {
-            hideLoading()
-
             it.either(::handleFailure, ::handlerDetailMovie)
         }
     }
 
     fun loadRecommendations() {
-        showLoading()
         getRecommendations(GetRecommendationsUseCase.Params(externalContentId.value.toString())) {
-            hideLoading()
             it.either(::handleFailure, ::handleRecommendations)
         }
     }

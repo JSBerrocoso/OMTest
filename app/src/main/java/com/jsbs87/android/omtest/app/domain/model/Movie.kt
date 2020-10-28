@@ -24,6 +24,7 @@ open class Movie(
     val year: Int,
     val shortName: String,
     var favorite: Boolean = false,
+    var showTitle: Boolean = false
 ) : Parcelable, OMTestMovie {
     fun toJson(): String? {
         return Gson().toJson(this)
@@ -31,7 +32,7 @@ open class Movie(
 
     companion object {
         fun empty() = Movie(
-            "", emptyList(), "", "", "", "", 0, "", 0, "", "", "", 0, "", 0, "", false
+            "", emptyList(), "", "", "", "", 0, "", 0, "", "", "", 0, "", 0, "", false, false
         )
     }
 }

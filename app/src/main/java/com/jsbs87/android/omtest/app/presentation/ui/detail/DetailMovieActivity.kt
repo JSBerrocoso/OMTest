@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.model.Movie
+import com.jsbs87.android.omtest.app.presentation.extension.replace
 import com.jsbs87.android.omtest.app.presentation.platform.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail_movie.*
 
@@ -30,16 +31,11 @@ class DetailMovieActivity : BaseActivity() {
         setOnBackButtonToolbar(true, toolbar)
 
         if (intent.hasExtra(DetailMovieFragment.EXTRA_EXTERNAL_ID)) {
-            val externalId = intent.getStringExtra(DetailMovieFragment.EXTRA_EXTERNAL_ID)
-            val detail = DetailMovieFragment.newInstance(externalId)
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.container_detail, detail)
-                .commit()
+            replace(
+                R.id.container_detail,
+                DetailMovieFragment.newInstance(intent.getStringExtra(DetailMovieFragment.EXTRA_EXTERNAL_ID))
+            )
         }
-//        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
     }
 
 }

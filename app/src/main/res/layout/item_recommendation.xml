@@ -45,11 +45,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/space_8"
                 android:layout_marginStart="@dimen/space_8"
-                android:gravity="center"
+                android:gravity="center|start"
                 android:maxLines="2"
                 android:minLines="2"
                 android:textColor="@android:color/white"
                 tools:text="Movie"
+                android:textStyle="bold"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -60,7 +61,7 @@
                 android:layout_marginStart="@dimen/space_8"
                 android:layout_marginEnd="@dimen/space_8"
                 android:layout_marginBottom="@dimen/space_8"
-                android:gravity="center"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:textSize="10sp"
                 tools:text="Subtitle" />

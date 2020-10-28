@@ -9,7 +9,6 @@ import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.presentation.extension.failure
 import com.jsbs87.android.omtest.app.presentation.extension.observe
 import com.jsbs87.android.omtest.app.presentation.platform.BaseFragment
-import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieActivity
 import com.jsbs87.android.omtest.app.presentation.util.SearcheableView
 import kotlinx.android.synthetic.main.fragment_movies.*
 import org.koin.android.scope.lifecycleScope
@@ -21,7 +20,7 @@ class MoviesFragment : BaseFragment(), SearcheableView {
 
     private val movieAdapter =
         MoviesAdapter { movie ->
-            activity?.let { DetailMovieActivity.openActivity(it, movie.externalId) }
+            onClickMovie(movie)
         }
 
     override fun layoutId(): Int = R.layout.fragment_movies

@@ -19,7 +19,6 @@ abstract class BaseActivity : AppCompatActivity(), LoadingHandler {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
         loadingDialog = LoadingDialog.newInstance(getString(R.string.loading))
-
     }
 
     abstract fun layoutId(): Int

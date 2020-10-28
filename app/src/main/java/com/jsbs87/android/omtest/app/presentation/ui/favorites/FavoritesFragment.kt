@@ -22,7 +22,7 @@ class FavoritesFragment : BaseFragment(), SearcheableView {
 
     private val movieAdapter =
         FavoriteMoviesAdapter({ movie ->
-            activity?.let { DetailMovieActivity.openActivity(it, movie.externalId) }
+            onClickMovie(movie)
         }, {
             viewModel.removeFromFavorite(it)
         })

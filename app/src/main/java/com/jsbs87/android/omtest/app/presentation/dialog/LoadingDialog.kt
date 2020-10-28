@@ -1,5 +1,6 @@
 package com.jsbs87.android.omtest.app.presentation.dialog
 
+import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,6 +16,10 @@ import kotlinx.android.synthetic.main.layout_loading.*
 
 class LoadingDialog : DialogFragment() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        retainInstance = true
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +41,15 @@ class LoadingDialog : DialogFragment() {
 
     fun hide() {
         dismiss()
+    }
+
+    override fun onDestroyView() {
+        val dialog: Dialog? = dialog
+        // handles https://code.google.com/p/android/issues/detail?id=17423
+        if (dialog != null && retainInstance) {
+            dialog.setDismissMessage(null)
+        }
+        super.onDestroyView()
     }
 
     companion object {

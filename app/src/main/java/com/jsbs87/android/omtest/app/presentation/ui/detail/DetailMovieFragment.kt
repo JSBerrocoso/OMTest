@@ -61,16 +61,16 @@ class DetailMovieFragment : BaseFragment() {
     }
 
     private fun handleMovie(movie: Movie?) {
-        movieAdapter.movie = movie
-
-        movieAdapter.notifyDataSetChanged()
         movie?.name?.let {
             if (hasCollapsingToolbarLayout()) {
                 setTitleCollapsingToolbarLayout(it)
             } else {
-                setTitleToolbar(it)
+                movie.showTitle = true
             }
         }
+
+        movieAdapter.movie = movie
+        movieAdapter.notifyDataSetChanged()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

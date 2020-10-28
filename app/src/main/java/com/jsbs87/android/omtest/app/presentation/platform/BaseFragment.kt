@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.exception.Failure
+import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.presentation.extension.hideLoading
 import com.jsbs87.android.omtest.app.presentation.extension.showLoading
+import com.jsbs87.android.omtest.app.presentation.util.TouchableMovieView
 
 abstract class BaseFragment : Fragment() {
 
@@ -75,6 +77,12 @@ abstract class BaseFragment : Fragment() {
     fun showSnackBar(text: String) {
         when (activity) {
             is BaseActivity -> (activity as BaseActivity).showSnackBar(text)
+        }
+    }
+
+    internal fun onClickMovie(movie: Movie) {
+        if (activity is TouchableMovieView) {
+            (activity as TouchableMovieView).onClickMovie(movie)
         }
     }
 }

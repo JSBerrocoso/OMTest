@@ -14,16 +14,18 @@ import com.jsbs87.android.omtest.app.domain.model.OMTestMovie
 import com.jsbs87.android.omtest.app.domain.model.Recommentation
 import com.jsbs87.android.omtest.app.presentation.extension.loadUrl
 import kotlinx.android.synthetic.main.item_header_detail_movie.view.*
-import kotlinx.android.synthetic.main.item_recommendation.view.*
 import kotlinx.android.synthetic.main.item_recommendation.view.container_item_movie
 
-class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit, val onClickAddFavorite: (Movie) -> Unit) :
+class RecommendationsAdapter(
+    val onClickItem: (Recommentation, Int) -> Unit,
+    val onClickAddFavorite: (Movie) -> Unit
+) :
     RecyclerView.Adapter<RecommendationsAdapter.DetailViewHolder>() {
 
     private val items = mutableListOf<Recommentation>()
     var movie: Movie? = null
 
-    class RecommentationVH(view: View) : DetailViewHolder(view) {
+    class RecommendationVH(view: View) : DetailViewHolder(view) {
         private val image = view.findViewById<AppCompatImageView>(R.id.image_movie)
         private val title = view.findViewById<AppCompatTextView>(R.id.title_movie)
         private val subtitle = view.findViewById<AppCompatTextView>(R.id.subtitle_movie)
@@ -31,6 +33,8 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit, val
         override fun bind(item: OMTestMovie) {
             if (item is Recommentation) {
                 title.text = item.name
+                subtitle.text =
+                    this.itemView.context.getString(R.string.rating, item.rating.toString())
                 val photoUrl = item.images.find { it.name == "COVER4_1" }?.value
                 if (photoUrl?.isNotEmpty()!!) {
                     image.loadUrl(photoUrl)
@@ -41,26 +45,32 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit, val
 
     class HeaderVH(view: View) : DetailViewHolder(view) {
         private val imageHeader = view.findViewById<AppCompatImageView>(R.id.image_movie_detail)
-//        private val title = view.findViewById<AppCompatTextView>(R.id.title_movie_header)
+        private val title = view.findViewById<AppCompatTextView>(R.id.title_movie_header)
         private val subtitle = view.findViewById<AppCompatTextView>(R.id.subtitle_movie_header)
-        private val description = view.findViewById<AppCompatTextView>(R.id.description_movie_header)
+        private val description =
+            view.findViewById<AppCompatTextView>(R.id.description_movie_header)
         private val year = view.findViewById<AppCompatTextView>(R.id.year_movie_header)
         private val fabAddFavorite = view.findViewById<FloatingActionButton>(R.id.fab_add_favorites)
 
         override fun bind(item: OMTestMovie) {
             if (item is Movie) {
-//                title.text = item.name
-                subtitle.text = this.itemView.context.getString(R.string.keywords,item.keywords)
+                if (item.showTitle) {
+                    title.text = item.name
+                    title.visibility = View.VISIBLE
+                } else {
+                    title.visibility = View.GONE
+                }
+                subtitle.text = this.itemView.context.getString(R.string.keywords, item.keywords)
                 description.text = item.description
-                year.text = this.itemView.context.getString(R.string.year,item.year.toString())
+                year.text = this.itemView.context.getString(R.string.year, item.year.toString())
                 val photoUrl =
                     item.attachments.find { it.name == "GENERIC_APP_SLSHOW_3" }?.value ?: ""
                 if (photoUrl.isNotEmpty()) {
                     imageHeader.loadUrl(photoUrl)
                 }
-                if(item.favorite){
+                if (item.favorite) {
                     fabAddFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-                }else fabAddFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                } else fabAddFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
             }
 
         }
@@ -80,7 +90,7 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit, val
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_recommendation, parent, false)
                     .let {
-                        RecommentationVH(it)
+                        RecommendationVH(it)
                     }
             }
         }
@@ -120,12 +130,6 @@ class RecommendationsAdapter(val onClickItem: (Recommentation, Int) -> Unit, val
             }
         }
     }
-
-//    @UiThread
-//    fun updateFavorite(saved: Boolean) {
-//        savedMovie = saved
-////        notifyDataSetChanged()
-//    }
 
     abstract class DetailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         abstract fun bind(item: OMTestMovie)

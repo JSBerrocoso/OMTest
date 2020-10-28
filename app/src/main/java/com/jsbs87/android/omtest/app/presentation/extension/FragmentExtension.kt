@@ -1,7 +1,11 @@
 package com.jsbs87.android.omtest.app.presentation.extension
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.presentation.platform.BaseActivity
 import com.jsbs87.android.omtest.app.presentation.platform.BaseFragment
+import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieFragment
 import com.jsbs87.android.omtest.app.presentation.util.LoadingHandler
 
 
@@ -21,4 +25,10 @@ fun BaseFragment.showDefaultError() {
     if ((activity is BaseActivity)) {
         (activity as BaseActivity).showGenericError()
     }
+}
+
+fun AppCompatActivity.replace(id: Int, fragment: Fragment) {
+    supportFragmentManager.beginTransaction()
+        .replace(id, fragment)
+        .commit()
 }

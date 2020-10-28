@@ -50,6 +50,7 @@
                 android:minLines="2"
                 android:textColor="@android:color/white"
                 tools:text="Movie"
+                android:textStyle="bold"
                 />
 
             <androidx.appcompat.widget.AppCompatTextView
