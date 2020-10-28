@@ -6,21 +6,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.jsbs87.android.omtest.app.R
 import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.presentation.adapter.FavoriteMoviesAdapter
-import com.jsbs87.android.omtest.app.presentation.adapter.MoviesAdapter
 import com.jsbs87.android.omtest.app.presentation.extension.failure
 import com.jsbs87.android.omtest.app.presentation.extension.observe
 import com.jsbs87.android.omtest.app.presentation.platform.BaseFragment
 import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieActivity
+import com.jsbs87.android.omtest.app.presentation.util.SearcheableView
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
-class FavoritesFragment : BaseFragment() {
+class FavoritesFragment : BaseFragment(), SearcheableView {
 
     private val viewModel by lifecycleScope.viewModel<FavoritesViewModel>(this)
 
-    // TODO CHANGE ADAPTER TO SUPPORT ADD_OR_REMOVE_FAVORITE
     private val movieAdapter =
         FavoriteMoviesAdapter({ movie ->
             activity?.let { DetailMovieActivity.openActivity(it, movie.externalId) }
@@ -32,7 +31,8 @@ class FavoritesFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        observe(viewModel.movies, ::handleMovies)
+        observe(viewModel.movies, ::handleFavoriteMovies)
+        observe(viewModel.filteredElements, ::handleFavoriteMovies)
         observe(viewModel.loading, ::handleLoading)
         failure(viewModel.failure, ::showError)
     }
@@ -53,7 +53,7 @@ class FavoritesFragment : BaseFragment() {
         viewModel.loadFavoriteMovies()
     }
 
-    private fun handleMovies(movies: List<Movie>?) {
+    private fun handleFavoriteMovies(movies: List<Movie>?) {
         if (movies?.isEmpty()!!) {
             showEmptyViews()
         } else {
@@ -70,6 +70,10 @@ class FavoritesFragment : BaseFragment() {
     private fun showEmptyViews() {
         empty_movies_container.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
+    }
+
+    override fun search(newText: String) {
+        viewModel.searchText = newText
     }
 
 }

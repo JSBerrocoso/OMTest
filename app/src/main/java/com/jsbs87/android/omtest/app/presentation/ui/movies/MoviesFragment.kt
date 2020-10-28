@@ -10,16 +10,17 @@ import com.jsbs87.android.omtest.app.presentation.extension.failure
 import com.jsbs87.android.omtest.app.presentation.extension.observe
 import com.jsbs87.android.omtest.app.presentation.platform.BaseFragment
 import com.jsbs87.android.omtest.app.presentation.ui.detail.DetailMovieActivity
+import com.jsbs87.android.omtest.app.presentation.util.SearcheableView
 import kotlinx.android.synthetic.main.fragment_movies.*
 import org.koin.android.scope.lifecycleScope
 import org.koin.android.viewmodel.scope.viewModel
 
-class MoviesFragment : BaseFragment() {
+class MoviesFragment : BaseFragment(), SearcheableView {
 
     private val viewModel by lifecycleScope.viewModel<MoviesViewModel>(this)
 
     private val movieAdapter =
-        MoviesAdapter { movie, position ->
+        MoviesAdapter { movie ->
             activity?.let { DetailMovieActivity.openActivity(it, movie.externalId) }
         }
 
@@ -27,7 +28,8 @@ class MoviesFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        observe(viewModel.films, ::handleFilms)
+        observe(viewModel.films, ::handleMovies)
+        observe(viewModel.filteredElements, ::handleMovies)
         observe(viewModel.loading, ::handleLoading)
         failure(viewModel.failure, ::showError)
     }
@@ -41,7 +43,7 @@ class MoviesFragment : BaseFragment() {
         viewModel.loadMovies()
     }
 
-    private fun handleFilms(movies: List<Movie>?) {
+    private fun handleMovies(movies: List<Movie>?) {
         if (movies?.isEmpty()!!) {
             showEmptyViews()
         } else {
@@ -58,5 +60,9 @@ class MoviesFragment : BaseFragment() {
     private fun showEmptyViews() {
         empty_movies_container.visibility = View.VISIBLE
         recycler_view.visibility = View.GONE
+    }
+
+    override fun search(newText: String) {
+        viewModel.searchText = newText
     }
 }

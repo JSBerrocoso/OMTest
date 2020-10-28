@@ -11,7 +11,24 @@ class FavoritesViewModel(
     private val deleteFavoriteMovie: DeleteFavoriteMovieUseCase
 ) : BaseViewModel() {
 
+    var filteredElements: MutableLiveData<List<Movie>> = MutableLiveData()
     var movies: MutableLiveData<List<Movie>> = MutableLiveData()
+    var searchText: String = ""
+        set(value) {
+            field = value
+            filterData()
+        }
+
+    private fun filterData() {
+        if (searchText.isEmpty()) {
+            filteredElements.value = movies.value
+            filteredElements.postValue(filteredElements.value)
+            return
+        }
+        filteredElements.value = movies.value?.filter { it.name.contains(searchText) }
+        filteredElements.postValue(filteredElements.value)
+    }
+
 
     fun loadFavoriteMovies() {
         showLoading()

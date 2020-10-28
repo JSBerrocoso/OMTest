@@ -12,7 +12,7 @@ import com.jsbs87.android.omtest.app.domain.model.Movie
 import com.jsbs87.android.omtest.app.presentation.extension.loadUrl
 import kotlinx.android.synthetic.main.item_movie.view.*
 
-class MoviesAdapter(val onClickItem: (Movie, Int) -> Unit) :
+class MoviesAdapter(val onClickItem: (Movie) -> Unit) :
     RecyclerView.Adapter<MoviesAdapter.MovieVH>() {
 
     private val items = mutableListOf<Movie>()
@@ -47,7 +47,7 @@ class MoviesAdapter(val onClickItem: (Movie, Int) -> Unit) :
     override fun onBindViewHolder(holder: MovieVH, position: Int) {
         holder.bind(items[position])
         holder.itemView.container_item_movie.setOnClickListener {
-            onClickItem(items[position], position)
+            onClickItem(items[position])
         }
     }
 

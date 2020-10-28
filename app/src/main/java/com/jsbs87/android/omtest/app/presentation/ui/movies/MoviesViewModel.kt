@@ -8,11 +8,28 @@ import com.jsbs87.android.omtest.app.presentation.platform.BaseViewModel
 
 class MoviesViewModel(private val getMovies: GetMoviesUseCase) : BaseViewModel() {
 
+    var filteredElements: MutableLiveData<List<Movie>> = MutableLiveData()
     var films: MutableLiveData<List<Movie>> = MutableLiveData()
+    var searchText: String = ""
+        set(value) {
+            field = value
+            filterData()
+        }
+
+    private fun filterData() {
+        if (searchText.isEmpty()) {
+            filteredElements.value = films.value
+            filteredElements.postValue(filteredElements.value)
+            return
+        }
+        filteredElements.value = films.value?.filter { it.name.contains(searchText) }
+        filteredElements.postValue(filteredElements.value)
+    }
+
 
     fun loadMovies() {
         showLoading()
-        getMovies(UseCase.None){
+        getMovies(UseCase.None) {
             hideLoading()
             it.either(::handleFailure, ::handlerFilms)
         }
